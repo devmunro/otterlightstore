@@ -1,0 +1,32 @@
+{
+  "name": "lightstore",
+  "version": "1.0.0",
+  "description": "A beginners lightweight state management solution for React",
+  "main": "index.js",
+  "module": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "keywords": [
+    "react",
+    "state",
+    "store",
+    "zustand",
+    "redux",
+    "global state"
+  ],
+  "author": "David Munro",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "files": [
+    "src",
+    "index.js",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devmunro/reactlightstore"
+  }
+}
