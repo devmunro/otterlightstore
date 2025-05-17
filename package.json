@@ -1,8 +1,8 @@
 {
-  "name": "lightstore",
-  "version": "1.0.0",
+  "name": "otterlightstore",
+  "version": "1.0.1",
   "description": "A beginners lightweight state management solution for React",
-  "main": "index.js",
+  "main": "dist/index.js",
   "module": "index.js",
   "exports": {
     ".": "./index.js"
@@ -22,7 +22,9 @@
     "react": "^19.0.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "babel src --out-dir dist --copy-files",
+    "prepublishOnly": "npm run build"
   },
   "files": [
     "src",
@@ -34,6 +36,7 @@
     "url": "https://github.com/devmunro/reactlightstore"
   },
   "devDependencies": {
+    "@babel/cli": "^7.27.2",
     "@babel/core": "^7.27.1",
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-react": "^7.27.1",
