@@ -1,0 +1,13 @@
+src/
+tests/
+test/
+__tests__/
+*.config.js
+*.config.json
+*.babelrc
+*.eslintrc.js
+.vscode/
+coverage/
+node_modules/
+*.log
+.DS_Store
