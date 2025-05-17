@@ -1,11 +1,14 @@
-import { useSyncExternalStore, useRef } from 'react';
+import { useSyncExternalStore, useRef } from "react";
 
 function shallowEqual(objA, objB) {
   if (objA === objB) return true;
   if (
-    typeof objA !== 'object' || objA === null ||
-    typeof objB !== 'object' || objB === null
-  ) return false;
+    typeof objA !== "object" ||
+    objA === null ||
+    typeof objB !== "object" ||
+    objB === null
+  )
+    return false;
   const keysA = Object.keys(objA);
   const keysB = Object.keys(objB);
   if (keysA.length !== keysB.length) return false;
@@ -15,39 +18,46 @@ function shallowEqual(objA, objB) {
   return true;
 }
 
-export function createStore(initialState = {}) {
+export function createStore(initialState = {}, options = {}) {
   let state = initialState;
   const listeners = new Set();
   let isNotifying = false;
-const { enableLogging = false } = options;
+  const { enableLogging = false } = options;
 
   const devtoolsHistory = [];
   const maxHistoryLength = 50;
-  let currentIndex = -1;
+  devtoolsHistory.push({
+    prevState: null,
+    nextState: initialState,
+    actionName: "init",
+  });
+  let currentIndex = 0;
 
   const get = () => state;
 
-  const set = (partial, actionName = 'set') => {
-    const nextState = typeof partial === 'function' ? partial(state) : partial;
+  const set = (partial, actionName = "set") => {
+    const nextState = typeof partial === "function" ? partial(state) : partial;
     const prevState = state;
     state = { ...state, ...nextState };
 
-    // Log 
+    // Log
     if (enableLogging) {
-    console.groupCollapsed(`LightStore action: ${actionName}`);
-    console.log('Previous state:', prevState);
-    console.log('Next state:', state);
-    console.groupEnd();
+      console.groupCollapsed(`LightStore action: ${actionName}`);
+      console.log("Previous state:", prevState);
+      console.log("Next state:", state);
+      console.groupEnd();
     }
 
     if (currentIndex < devtoolsHistory.length - 1) {
-      devtoolsHistory.splice(currentIndex + 1);
+      devtoolsHistory.splice(currentIndex + 1, devtoolsHistory.length - currentIndex - 1);
+
     }
     devtoolsHistory.push({ prevState, nextState: state, actionName });
+    currentIndex++;
+
     if (devtoolsHistory.length > maxHistoryLength) {
       devtoolsHistory.shift();
-    } else {
-      currentIndex++;
+      currentIndex--;
     }
 
     if (!isNotifying) {
@@ -92,12 +102,21 @@ const { enableLogging = false } = options;
 
   // min async helper
   const asyncState = async (key, asyncFn) => {
-    set({ [key]: { loading: true, data: null, error: null } }, `asyncState:${key}:loading`);
+    set(
+      { [key]: { loading: true, data: null, error: null } },
+      `asyncState:${key}:loading`
+    );
     try {
       const data = await asyncFn();
-      set({ [key]: { loading: false, data, error: null } }, `asyncState:${key}:success`);
+      set(
+        { [key]: { loading: false, data, error: null } },
+        `asyncState:${key}:success`
+      );
     } catch (error) {
-      set({ [key]: { loading: false, data: null, error } }, `asyncState:${key}:error`);
+      set(
+        { [key]: { loading: false, data: null, error } },
+        `asyncState:${key}:error`
+      );
     }
   };
   //helpers
@@ -116,21 +135,24 @@ const { enableLogging = false } = options;
     set((prev) => {
       const arr = Array.isArray(prev[key]) ? prev[key] : [];
       const newArr = arr.filter((item) =>
-        typeof predicate === 'function' ? !predicate(item) : item !== predicate
+        typeof predicate === "function" ? !predicate(item) : item !== predicate
       );
       return { [key]: newArr };
     }, `deleteFromArray:${key}`);
   }
 
   function updateObject(key, partialUpdate) {
-    set((prev) => ({
-      [key]: { ...(prev[key] || {}), ...partialUpdate },
-    }), `updateObject:${key}`);
+    set(
+      (prev) => ({
+        [key]: { ...(prev[key] || {}), ...partialUpdate },
+      }),
+      `updateObject:${key}`
+    );
   }
 
   function deleteFromObject(key, prop) {
     set((prev) => {
-      if (!prev[key] || typeof prev[key] !== 'object') return {};
+      if (!prev[key] || typeof prev[key] !== "object") return {};
       const { [prop]: _, ...rest } = prev[key];
       return { [key]: rest };
     }, `deleteFromObject:${key}`);
@@ -157,6 +179,6 @@ const { enableLogging = false } = options;
     updateObject,
     deleteFromObject,
     devtools,
-    options
+    options,
   };
 }
