@@ -1,3 +1,6 @@
+![image](https://github.com/user-attachments/assets/665bf2f5-878a-4922-845e-58ee63aa5497)
+
+
 otterlightstore
 ===============
 
@@ -33,19 +36,60 @@ Usage
 
 ### 1\. Create your store
 
-`import { createStore } from "otterlightstore";  const initialState = {    count: 0,    todos: [],    loading: false,  };  export const store = createStore(initialState);   `
+```js
+import { createStore } from "otterlightstore";
+
+const initialState = {
+  count: 0,
+  todos: [],
+  loading: false,
+};
+
+export const store = createStore(initialState);
+```
 
 ### 2\. Use the store in your components
 
-`import React from "react";  import { store } from "./store";  function Counter() {    const count = store.useLightStore((state) => state.count);    return (                Count: {count}         store.set({ count: count + 1 }, "increment")}>          Increment    );  }   `
+```js
+import React from "react";
+import { store } from "./store";
+
+function Counter() {
+  const count = store.useLightStore((state) => state.count);
+
+  const increment = () => {
+    store.set({ count: count + 1 }, "increment");
+  };
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
+}
+```
 
 ### 3\. Async state example
 
-`async function fetchData() {    await store.asyncState("data", async () => {      const response = await fetch("https://api.example.com/data");      return response.json();    });  }   `
+```js
+async function fetchData() {
+  await store.asyncState("data", async () => {
+    const response = await fetch("https://api.example.com/data");
+    return response.json();
+  });
+}
+```
 
 ### 4\. Using helpers
 
-`store.toggleBoolean("isOpen");  store.updateArray("todos", (arr) => [...arr, { id: 1, text: "Learn otterlightstore" }]);  store.deleteFromArray("todos", (todo) => todo.id === 1);  store.updateObject("user", { name: "Alice" });  store.deleteFromObject("user", "age");   `
+```js
+store.toggleBoolean("isOpen");
+store.updateArray("todos", (arr) => [...arr, { id: 1, text: "Learn otterlightstore" }]);
+store.deleteFromArray("todos", (todo) => todo.id === 1);
+store.updateObject("user", { name: "Alice" });
+store.deleteFromObject("user", "age");   
+````
 
 API Reference
 -------------
