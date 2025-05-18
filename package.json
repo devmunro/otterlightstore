@@ -1,6 +1,6 @@
 {
   "name": "otterlightstore",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A beginners lightweight state management solution for React",
   "main": "dist/index.js",
   "module": "index.js",
@@ -29,7 +29,8 @@
   "files": [
     "src",
     "index.js",
-    "README.md"
+    "README.md",
+    "templates"
   ],
   "bin": {
   "otterlightstore-init": "./bin/otter-store.js"
