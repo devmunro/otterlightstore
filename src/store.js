@@ -81,24 +81,6 @@ export function createStore(initialState = {}, options = {}) {
     return () => listeners.delete(listener);
   };
 
-  const useLightStore = (selector = (s) => s) => {
-    const lastSelectedRef = useRef();
-    const selected = useSyncExternalStore(
-      subscribe,
-      () => {
-        const selected = selector(state);
-        lastSelectedRef.current = selected;
-        return selected;
-      },
-      () => lastSelectedRef.current
-    );
-    const lastSelected = lastSelectedRef.current;
-
-    if (!shallowEqual(lastSelected, selected)) {
-      lastSelectedRef.current = selected;
-    }
-    return selected;
-  };
 
   // min async helper
   const asyncState = async (key, asyncFn) => {
@@ -171,7 +153,7 @@ export function createStore(initialState = {}, options = {}) {
   return {
     get,
     set,
-    useLightStore,
+    subscribe,
     asyncState,
     toggleBoolean,
     updateArray,
@@ -181,4 +163,22 @@ export function createStore(initialState = {}, options = {}) {
     devtools,
     options,
   };
+}
+
+
+export function useLightStore(store, selector = s => s) {
+  const lastSelectedRef = useRef();
+
+  return useSyncExternalStore(
+    store.subscribe,
+    () => {
+      const selected = selector(store.get());
+      if (shallowEqual(lastSelectedRef.current, selected)) {
+        return lastSelectedRef.current;
+      }
+      lastSelectedRef.current = selected;
+      return selected;
+    },
+    () => selector(store.get())
+  );
 }
