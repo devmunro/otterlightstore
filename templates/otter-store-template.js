@@ -21,4 +21,4 @@ const initialState = {
 const yourStore = createStore(initialState);
 
 // 3. Export the store so other parts of your app can use it
-export { toggleBoolean, updateArray, deleteFromArray, updateObject, deleteFromObject };
+export { yourStore, toggleBoolean, updateArray, deleteFromArray, updateObject, deleteFromObject };
