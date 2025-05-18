@@ -31,6 +31,9 @@
     "index.js",
     "README.md"
   ],
+  "bin": {
+  "otterlightstore-init": "./bin/otter-store.js"
+},
   "repository": {
     "type": "git",
     "url": "https://github.com/devmunro/reactlightstore"
