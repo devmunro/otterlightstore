@@ -53,6 +53,7 @@ This file includes:
 * Setup for your React components to use the store
 * Example usage of helpers like toggling booleans and updating arrays
 
+<br>
 
 ### 1b\. Create your store
 
