@@ -1,12 +1,17 @@
 ![image](https://github.com/user-attachments/assets/665bf2f5-878a-4922-845e-58ee63aa5497)
 
 
-otterlightstore
-===============
-
+# otterlightstore
+----------------
 A lightweight state management library for React using useSyncExternalStore. Provides simple APIs for managing global state with support for async states, object/array updates, and built-in devtools history.
 
-Features
+- [Features](#features)
+- [Installation](#installation)
+- [How to use](#how-to-use)
+- [Devtools](#devtools)
+
+
+#Features
 --------
 
 *   Simple, minimalistic API
@@ -20,9 +25,10 @@ Features
 *   Devtools history & state restore
     
 *   No dependencies except React
-    
 
-Installation
+<br>
+
+#Installation
 ------------
 
 `npm install otterlightstore   `
@@ -31,9 +37,8 @@ or
 
 `yarn add otterlightstore   `
 
-Usage
+#How to start - Choose either 1a or 1b
 -----
-
 
 ### 1a\. Initialize Starter Store File
 Run this once to create a ready-to-use otter-store.js file in your current folder:
@@ -42,11 +47,10 @@ Run this once to create a ready-to-use otter-store.js file in your current folde
 
 This file includes:
 
-*A basic store with example initial state
-*Setup for your React components to use the store
-*Example usage of helpers like toggling booleans and updating arrays
+* A basic store with example initial state
+* Setup for your React components to use the store
+* Example usage of helpers like toggling booleans and updating arrays
 
-or
 
 ### 1b\. Create your store
 
@@ -61,6 +65,11 @@ const initialState = {
 
 export const store = createStore(initialState);
 ```
+
+<br>
+
+#How to use
+---------
 
 ### 2\. Use the store in your components
 
@@ -105,6 +114,15 @@ store.updateObject("user", { name: "Alice" });
 store.deleteFromObject("user", "age");   
 ````
 
+  
+
+#Devtools
+--------
+
+Store keeps a history (max 50). Use:
+
+`const history = store.devtools.getHistory();  store.devtools.restoreState(0);   `
+
 API Reference
 -------------
 
@@ -138,11 +156,3 @@ Returns:
 *   deleteFromObject(key, prop) — delete object prop
     
 *   devtools — history and restore functions
-    
-
-Devtools
---------
-
-Store keeps a history (max 50). Use:
-
-`const history = store.devtools.getHistory();  store.devtools.restoreState(0);   `
