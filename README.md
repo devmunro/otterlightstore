@@ -34,7 +34,21 @@ or
 Usage
 -----
 
-### 1\. Create your store
+
+### 1a\. Initialize Starter Store File
+Run this once to create a ready-to-use otter-store.js file in your current folder:
+
+`npx otterlightstore-init`
+
+This file includes:
+
+*A basic store with example initial state
+*Setup for your React components to use the store
+*Example usage of helpers like toggling booleans and updating arrays
+
+or
+
+### 1b\. Create your store
 
 ```js
 import { createStore } from "otterlightstore";
