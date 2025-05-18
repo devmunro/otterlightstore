@@ -37,6 +37,8 @@ or
 
 `yarn add otterlightstore   `
 
+<br>
+
 #How to start - Choose either 1a or 1b
 -----
 
